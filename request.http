@@ -1,0 +1,26 @@
+### GET request
+# Returns total list of books
+GET http://localhost:9239/api/library/books/all-books
+###
+# Returns total number of books
+GET http://localhost:9239/api/library/books/no-of-books
+###
+# Returns book with isbn
+GET http://localhost:9239/api/library/books/{isbn}
+
+
+### POST request
+# Adds a single collection of books
+POST http://localhost:9239/api/library/books/add-book
+Content-Type: application/json
+
+  {
+    "title": "Beat the best and be the Best",
+    "author": "Dr. D.K Olukoya",
+    "isbn": 9788884775666
+  }
+
+### DELETE request
+DELETE http://localhost:9239/api/library/books/{isbn}
+
+###
