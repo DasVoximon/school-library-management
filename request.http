@@ -1,6 +1,6 @@
 ### GET request
 # Returns total list of books
-GET http://localhost:9239/api/library/books/all-books
+GET http://localhost:9239/api/library/books
 ###
 # Returns total number of books
 GET http://localhost:9239/api/library/books/no-of-books
