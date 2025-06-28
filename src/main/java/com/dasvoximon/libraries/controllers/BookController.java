@@ -1,7 +1,8 @@
 package com.dasvoximon.libraries.controllers;
 
 import com.dasvoximon.libraries.models.*;
-import com.dasvoximon.libraries.service.BookCollection;
+import com.dasvoximon.libraries.service.BookService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,11 +13,14 @@ import java.util.List;
 @RequestMapping("/api/library/books")
 public class BookController {
 
-    BookCollection bc = new BookCollection();
+    @Autowired
+    BookService service;
 
     // Get all books
 	@GetMapping("/all-books")
-	public List<Book> getBooks() { return bc.getBooks(); }
+	public List<Book> getBooks() {
+        return service.getBooks();
+    }
 
     // Get book by isbn
     @GetMapping("/{isbn}")
@@ -30,12 +34,14 @@ public class BookController {
 
     // Get Total Amount of Books
     @GetMapping("/no-of-books")
-    public String totalBooks() { return bc.getTotalBooks(); }
+    public String totalBooks() {
+        return service.getTotalBooks();
+    }
 
     //Add book
     @PostMapping("/add-book")
     public Book addBook(@RequestBody Book newBook) {
-        bc.addBook(newBook);
+        service.addBook(newBook);
         return newBook;
     }
 
