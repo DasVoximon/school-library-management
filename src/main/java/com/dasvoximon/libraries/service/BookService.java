@@ -1,6 +1,8 @@
 package com.dasvoximon.libraries.service;
 
 import com.dasvoximon.libraries.models.Book;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
@@ -29,6 +31,24 @@ public class BookService {
 
     public String getTotalBooks() {
         return String.format("Total number of books in library is %d", getBooks().size());
+    }
+
+    public ResponseEntity<Book> getBookByISBN(Long isbn) {
+        return getBooks().stream()
+                .filter(book -> book.getIsbn().equals(isbn))
+                .findFirst()
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    public ResponseEntity<String> removeBookByISBN(Long isbn) {
+        boolean removed = getBooks().removeIf(book -> book.getIsbn().equals(isbn));
+
+        if (removed)
+            return ResponseEntity.ok("Book with ISBN: " + isbn + " has been removed successfully");
+        else
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("Book with ISBN: " + isbn + " doesn't exist");
     }
 }
 
